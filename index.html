@@ -981,6 +981,12 @@
         body.view-desktop .spine-divider {
             display: block !important;
         }
+        body.view-desktop .bookmark-ribbon {
+            left: 46% !important;
+            right: auto !important;
+            transform: translateX(-50%) !important;
+            animation: ribbonSway 4s ease-in-out infinite !important;
+        }
         body.view-desktop .soft-page-left {
             background: linear-gradient(90deg, rgba(255,255,255,0.88) 0%, rgba(255,252,251,0.94) 75%, rgba(255,242,244,0.88) 90%, rgba(225,29,72,0.07) 97%, rgba(180,20,60,0.16) 100%) !important;
             box-shadow: inset -14px 0 22px -10px rgba(180,20,60,0.10), inset 0 -3px 8px rgba(0,0,0,0.02) !important;
@@ -1022,6 +1028,12 @@
         body.view-mobile .spine-divider {
             display: none !important;
         }
+        body.view-mobile .bookmark-ribbon {
+            left: auto !important;
+            right: 28px !important;
+            transform: translateX(0) !important;
+            animation: ribbonSwayMobile 4s ease-in-out infinite !important;
+        }
         body.view-mobile .soft-page-left,
         body.view-mobile .soft-page-right {
             background: #fffdfb !important;
@@ -1039,6 +1051,15 @@
                 padding: 0.85rem !important;
                 background: rgba(255, 245, 247, 0.55);
                 backdrop-filter: blur(12px);
+            }
+        }
+
+        @media (max-width: 767px) {
+            body:not(.view-desktop) .bookmark-ribbon {
+                left: auto !important;
+                right: 28px !important;
+                transform: translateX(0) !important;
+                animation: ribbonSwayMobile 4s ease-in-out infinite !important;
             }
         }
 </style>
