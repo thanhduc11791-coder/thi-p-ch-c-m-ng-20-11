@@ -1091,8 +1091,22 @@
     <!-- Canvas Cánh Hoa Đào & Bụi Tiên Bay Toàn Cảnh -->
     <canvas id="sakuraCanvas" class="fixed inset-0 w-full h-full z-0 pointer-events-none"></canvas>
 
-    <!-- NÚT "XEM LẠI" THU NHỎ (GÓC TRÊN TRÊN ĐIỆN THOẠI, GÓC DƯỚI TRÊN MÁY TÍNH) -->
-    <button id="btn-replay" onclick="resetMagicExperience()" class="fixed top-3 right-3 sm:top-auto sm:bottom-4 sm:right-4 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/85 hover:bg-white text-gray-600 hover:text-rose-600 border border-pink-200/90 shadow-md backdrop-blur-md text-xs font-semibold transition-all duration-300 opacity-0 pointer-events-none hover:scale-105" title="Xem lại hoạt cảnh biến hình từ đầu">
+    <!-- NÚT ĐIỀU KHIỂN NHẠC NỀN: BEAUTIFUL IN WHITE (PIANO INSTRUMENTAL) -->
+    <button id="btn-music" onclick="toggleMusic()" class="fixed top-2.5 right-2.5 sm:top-3 sm:right-3 z-50 flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/90 hover:bg-white text-gray-700 hover:text-rose-600 border border-pink-200/90 shadow-md backdrop-blur-md text-[11px] sm:text-xs font-medium transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer" title="Bật/Tắt nhạc nền (Beautiful in White - Không lời)">
+        <span id="music-disc" class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-rose-100 text-rose-600 animate-spin" style="animation-duration: 3.5s;">
+            <i data-lucide="music" class="w-2.5 h-2.5"></i>
+        </span>
+        <span id="music-text" class="hidden xs:inline sm:inline">Nhạc: Bật</span>
+    </button>
+
+    <!-- AUDIO PLAYER NỀN (BEAUTIFUL IN WHITE - KHÔNG LỜI / PIANO COVER) -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="audio/beautiful-in-white.mp3" type="audio/mpeg">
+        <source src="https://archive.org/download/shane-filan-beautiful-in-white-piano-cover-with-strings-with-lyrics-piano-sheet/Shane%20Filan%20-%20Beautiful%20In%20White%20%20Piano%20Cover%20with%20Strings%20%28with%20Lyrics%20%26%20PIANO%20SHEET%29.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- NÚT "XEM LẠI" (GÓC DƯỚI BÊN PHẢI) -->
+    <button id="btn-replay" onclick="resetMagicExperience()" class="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/85 hover:bg-white text-gray-600 hover:text-rose-600 border border-pink-200/90 shadow-md backdrop-blur-md text-xs font-semibold transition-all duration-300 opacity-0 pointer-events-none hover:scale-105" title="Xem lại hoạt cảnh biến hình từ đầu">
         <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
         <span>Xem Lại</span>
     </button>
@@ -1982,6 +1996,9 @@
             isMorphed = true;
             clearInterval(countdownInterval);
 
+            // Bật nhạc nền không lời Beautiful in White khi mở thiệp
+            playBackgroundMusic();
+
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -2046,8 +2063,6 @@
             orbGroup.setAttribute('transform', `translate(${startPt.x}, ${startPt.y})`);
 
             const duration = 2800;
-            startCircuitAudio(duration / 1000);
-
             const startTime = performance.now();
 
             function step(now) {
@@ -2072,9 +2087,6 @@
                     beam.style.strokeWidth = '6.5px';
                     envelope.style.boxShadow = '0 0 80px rgba(255, 30, 86, 0.95), 0 0 120px rgba(244, 63, 94, 0.85)';
 
-                    playPianoTone(659.25, 0.7);
-                    playPianoTone(523.25, 0.7);
-
                     setTimeout(() => {
                         if (onComplete) onComplete();
                     }, 260);
@@ -2095,7 +2107,6 @@
             const replayBtn = document.getElementById('btn-replay');
 
             envelope.classList.add('envelope-charging');
-            playEnergyChargeSound();
 
             setTimeout(() => {
                 shockwave1.classList.add('shockwave-active');
@@ -2124,8 +2135,6 @@
 
                     setTimeout(() => {
                         cover.classList.add('opened');
-                        playPianoTone(523.25, 0.6);
-                        setTimeout(() => playPianoTone(659.25, 0.6), 250);
 
                         setTimeout(() => {
                             replayBtn.classList.remove('opacity-0', 'pointer-events-none');
@@ -2143,6 +2152,73 @@
         function resetMagicExperience() {
             location.reload();
         }
+
+        /* ==========================================================
+           4. NHẠC NỀN BEAUTIFUL IN WHITE (PIANO INSTRUMENTAL) & AUDIO
+           ========================================================== */
+        let bgMusicStarted = false;
+
+        function playBackgroundMusic() {
+            const bgMusic = document.getElementById('bg-music');
+            if (bgMusic && bgMusic.paused) {
+                bgMusic.volume = 0.65;
+                const playPromise = bgMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        bgMusicStarted = true;
+                        updateMusicUi(true);
+                    }).catch(err => {
+                        console.log("Audio play postponed until gesture:", err);
+                        updateMusicUi(false);
+                    });
+                }
+            }
+        }
+
+        function toggleMusic() {
+            const bgMusic = document.getElementById('bg-music');
+            if (!bgMusic) return;
+            if (bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    bgMusicStarted = true;
+                    updateMusicUi(true);
+                }).catch(err => console.log(err));
+            } else {
+                bgMusic.pause();
+                updateMusicUi(false);
+            }
+        }
+
+        function updateMusicUi(isPlaying) {
+            const disc = document.getElementById('music-disc');
+            const text = document.getElementById('music-text');
+            const btn = document.getElementById('btn-music');
+            if (isPlaying) {
+                if (disc) {
+                    disc.classList.add('animate-spin');
+                    disc.innerHTML = '<i data-lucide="music" class="w-2.5 h-2.5"></i>';
+                }
+                if (text) text.innerText = 'Nhạc: Bật';
+                if (btn) btn.classList.remove('opacity-70');
+            } else {
+                if (disc) {
+                    disc.classList.remove('animate-spin');
+                    disc.innerHTML = '<i data-lucide="volume-x" class="w-2.5 h-2.5"></i>';
+                }
+                if (text) text.innerText = 'Nhạc: Tắt';
+                if (btn) btn.classList.add('opacity-70');
+            }
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
+        }
+
+        // Tự động kích hoạt khi có chạm/click đầu tiên trên thiết bị di động
+        document.addEventListener('pointerdown', function onFirstGesture() {
+            if (isMorphed && !bgMusicStarted) {
+                playBackgroundMusic();
+            }
+        }, { passive: true });
 
         /* ==========================================================
            4. WEB AUDIO SYNTHESIZER
@@ -2188,43 +2264,13 @@
         }
 
         function startCircuitAudio(durationSec) {
-            if (!audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(196, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(587.33, audioCtx.currentTime + durationSec);
-
-                gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + durationSec * 0.85);
-                gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + durationSec);
-
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + durationSec);
-            } catch(e) {}
+            // Đã tắt âm thanh mở đầu
+            return;
         }
 
         function playEnergyChargeSound() {
-            if (!audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(260, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(900, audioCtx.currentTime + 0.5);
-
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.25, audioCtx.currentTime + 0.45);
-                gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.55);
-
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.55);
-            } catch(e) {}
+            // Đã tắt âm thanh mở đầu
+            return;
         }
 
         function playPianoTone(freq, duration) {
