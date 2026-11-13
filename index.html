@@ -951,9 +951,113 @@
             z-index: 20;
             pointer-events: none;
         }
-    </style>
+    
+        /* ==========================================================
+           2 CHẾ ĐỘ HIỂN THỊ: ĐIỆN THOẠI (VIEW-MOBILE) & MÁY TÍNH LAPTOP (VIEW-DESKTOP)
+           ========================================================== */
+        /* Chế độ Máy tính / Laptop */
+        body.view-desktop .stage-viewport {
+            max-width: 56rem !important; /* 896px = max-w-4xl */
+            margin-top: 1.25rem;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        body.view-desktop .book-inner-page {
+            min-height: 580px !important;
+        }
+        body.view-desktop .page-spread {
+            position: absolute !important;
+            inset: 0 !important;
+            min-height: 540px !important;
+            flex-direction: row !important;
+        }
+        body.view-desktop .page-spread > div:first-child {
+            width: 46% !important;
+            border-bottom-width: 0 !important;
+            border-right-width: 1px !important;
+        }
+        body.view-desktop .page-spread > div:last-child {
+            width: 54% !important;
+        }
+        body.view-desktop .spine-divider {
+            display: block !important;
+        }
+        body.view-desktop .soft-page-left {
+            background: linear-gradient(90deg, rgba(255,255,255,0.88) 0%, rgba(255,252,251,0.94) 75%, rgba(255,242,244,0.88) 90%, rgba(225,29,72,0.07) 97%, rgba(180,20,60,0.16) 100%) !important;
+            box-shadow: inset -14px 0 22px -10px rgba(180,20,60,0.10), inset 0 -3px 8px rgba(0,0,0,0.02) !important;
+        }
+        body.view-desktop .soft-page-right {
+            background: linear-gradient(90deg, rgba(180,20,60,0.16) 0%, rgba(225,29,72,0.07) 3%, rgba(255,242,244,0.88) 10%, rgba(255,252,251,0.94) 25%, rgba(255,255,255,0.88) 100%) !important;
+            box-shadow: inset 14px 0 22px -10px rgba(180,20,60,0.10), inset 0 -3px 8px rgba(0,0,0,0.02) !important;
+        }
+
+        /* Chế độ Điện thoại (Mobile) */
+        body.view-mobile .stage-viewport {
+            max-width: 430px !important; /* Chiều ngang chuẩn smartphone */
+            margin-top: 2.2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        body.view-mobile .book-inner-page {
+            min-height: auto !important;
+            overflow: visible !important;
+            border-radius: 1.5rem !important;
+        }
+        body.view-mobile .page-spread {
+            position: relative !important;
+            inset: auto !important;
+            min-height: auto !important;
+            flex-direction: column !important;
+        }
+        body.view-mobile .page-spread.hidden {
+            display: none !important;
+        }
+        body.view-mobile .page-spread > div:first-child {
+            width: 100% !important;
+            border-bottom-width: 1px !important;
+            border-right-width: 0 !important;
+        }
+        body.view-mobile .page-spread > div:last-child {
+            width: 100% !important;
+        }
+        body.view-mobile .spine-divider {
+            display: none !important;
+        }
+        body.view-mobile .soft-page-left,
+        body.view-mobile .soft-page-right {
+            background: #fffdfb !important;
+            box-shadow: none !important;
+        }
+        body.view-mobile .book-nav-bar {
+            border-radius: 0 0 1.5rem 1.5rem !important;
+        }
+
+        /* Khi xem chế độ Điện thoại trên màn hình Máy tính (Hiển thị Khung Mô phỏng Smartphone thanh lịch) */
+        @media (min-width: 768px) {
+            body.view-mobile .stage-viewport {
+                border-radius: 2.5rem;
+                box-shadow: 0 25px 60px -15px rgba(225, 29, 72, 0.35), 0 0 0 6px rgba(255, 255, 255, 0.85);
+                padding: 0.85rem !important;
+                background: rgba(255, 245, 247, 0.55);
+                backdrop-filter: blur(12px);
+            }
+        }
+</style>
 </head>
 <body class="bg-pink-50 min-h-[100dvh] min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 overflow-x-hidden overflow-y-auto font-quicksand relative selection:bg-pink-300 selection:text-white">
+
+    <!-- =========================================================================
+         THANH CHUYỂN ĐỔI 2 CHẾ ĐỘ: ĐIỆN THOẠI (MOBILE) & MÁY TÍNH LAPTOP (DESKTOP)
+         ========================================================================= -->
+    <div id="device-mode-bar" class="fixed top-2.5 left-2.5 sm:top-3 sm:left-3 z-50 flex items-center bg-white/80 hover:bg-white/95 backdrop-blur-md p-0.5 rounded-full border border-pink-200/80 shadow-xs hover:shadow-md transition-all">
+        <button id="btn-mode-mobile" onclick="setDeviceMode('mobile')" class="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all text-gray-500 hover:text-rose-600" title="Chuyển sang Chế độ Điện thoại">
+            <i data-lucide="smartphone" class="w-3 h-3"></i>
+            <span>Điện thoại</span>
+        </button>
+        <button id="btn-mode-desktop" onclick="setDeviceMode('desktop')" class="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs" title="Chuyển sang Chế độ Máy tính / Laptop">
+            <i data-lucide="laptop" class="w-3 h-3"></i>
+            <span>Máy tính</span>
+        </button>
+    </div>
 
     <!-- Lớp chớp sáng điện ảnh chuyển cảnh -->
     <div id="flash-overlay" class="fixed inset-0 bg-white z-[80] opacity-0 pointer-events-none transition-opacity duration-700"></div>
@@ -1432,6 +1536,51 @@
 
     <!-- SCRIPT ĐIỀU KHIỂN CHUYỂN CẢNH MA THUẬT & HOẠT HỌA -->
     <script>
+        /* ==========================================================
+           CHUYỂN ĐỔI 2 CHẾ ĐỘ: ĐIỆN THOẠI & MÁY TÍNH LAPTOP
+           ========================================================== */
+        let currentDeviceMode = 'desktop';
+
+        function setDeviceMode(mode) {
+            currentDeviceMode = mode;
+            document.body.classList.remove('view-mobile', 'view-desktop');
+            document.body.classList.add(mode === 'mobile' ? 'view-mobile' : 'view-desktop');
+
+            const btnMobile = document.getElementById('btn-mode-mobile');
+            const btnDesktop = document.getElementById('btn-mode-desktop');
+
+            if (btnMobile && btnDesktop) {
+                if (mode === 'mobile') {
+                    btnMobile.className = "flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs";
+                    btnDesktop.className = "flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all text-gray-500 hover:text-rose-600";
+                } else {
+                    btnDesktop.className = "flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs";
+                    btnMobile.className = "flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all text-gray-500 hover:text-rose-600";
+                }
+            }
+
+            try {
+                localStorage.setItem('saved_device_mode', mode);
+            } catch(e){}
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function initDeviceMode() {
+            try {
+                const saved = localStorage.getItem('saved_device_mode');
+                if (saved === 'mobile' || saved === 'desktop') {
+                    setDeviceMode(saved);
+                    return;
+                }
+            } catch(e){}
+            const isMobileDevice = window.innerWidth < 768;
+            setDeviceMode(isMobileDevice ? 'mobile' : 'desktop');
+        }
+
+        // Kích hoạt nhận diện ngay lập tức
+        initDeviceMode();
+
         lucide.createIcons();
 
         /* ==========================================================
@@ -1561,7 +1710,7 @@
             playPaperTurnSound();
             spawnPageTurnParticles(isForward);
 
-            const isMobile = window.innerWidth < 768;
+            const isMobile = document.body.classList.contains('view-mobile') || (window.innerWidth < 768 && !document.body.classList.contains('view-desktop'));
             if (isMobile) {
                 // Pin outgoing page smoothly so incoming page takes space naturally without jumping
                 currentEl.style.position = 'absolute';
