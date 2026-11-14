@@ -1897,7 +1897,7 @@
                 const placeholder = document.getElementById('placeholder-' + domKey);
                 const delBtn = document.getElementById('del-' + domKey);
 
-                if (saved && img) {
+                if (saved && typeof saved === 'string' && saved.startsWith('data:image/') && img) {
                     img.src = saved;
                     img.classList.remove('hidden');
                     if (placeholder) placeholder.classList.add('hidden');
