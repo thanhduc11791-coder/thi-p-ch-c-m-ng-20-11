@@ -955,7 +955,10 @@
         /* ==========================================================
            2 CHẾ ĐỘ HIỂN THỊ: ĐIỆN THOẠI (VIEW-MOBILE) & MÁY TÍNH LAPTOP (VIEW-DESKTOP)
            ========================================================== */
-        /* Chế độ Máy tính / Laptop */
+        
+        /* ----------------------------------------------------------
+           A. CHẾ ĐỘ MÁY TÍNH / LAPTOP (GIỮ NGUYÊN 100% GIAO DIỆN 2 TRANG LẬT 3D)
+           ---------------------------------------------------------- */
         body.view-desktop .stage-viewport {
             max-width: 56rem !important; /* 896px = max-w-4xl */
             margin-top: 1.25rem;
@@ -969,6 +972,9 @@
             inset: 0 !important;
             min-height: 540px !important;
             flex-direction: row !important;
+        }
+        body.view-desktop .page-spread.hidden {
+            display: none !important;
         }
         body.view-desktop .page-spread > div:first-child {
             width: 46% !important;
@@ -995,27 +1001,45 @@
             background: linear-gradient(90deg, rgba(180,20,60,0.16) 0%, rgba(225,29,72,0.07) 3%, rgba(255,242,244,0.88) 10%, rgba(255,252,251,0.94) 25%, rgba(255,255,255,0.88) 100%) !important;
             box-shadow: inset 14px 0 22px -10px rgba(180,20,60,0.10), inset 0 -3px 8px rgba(0,0,0,0.02) !important;
         }
+        body.view-desktop .book-nav-bar {
+            display: flex !important;
+        }
+        body.view-desktop .corner-peel-btn,
+        body.view-desktop .corner-peel-left-btn {
+            display: block !important;
+        }
 
-        /* Chế độ Điện thoại (Mobile) */
+        /* ----------------------------------------------------------
+           B. CHẾ ĐỘ ĐIỆN THOẠI (VIEW-MOBILE) - 1 TRANG LIỀN MẠCH, CUỘN VUỐT DỌC
+           ---------------------------------------------------------- */
         body.view-mobile .stage-viewport {
-            max-width: 430px !important; /* Chiều ngang chuẩn smartphone */
+            max-width: 440px !important;
             margin-top: 2.2rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         body.view-mobile .book-inner-page {
             min-height: auto !important;
             overflow: visible !important;
             border-radius: 1.5rem !important;
+            padding-bottom: 2rem !important;
         }
         body.view-mobile .page-spread {
             position: relative !important;
             inset: auto !important;
             min-height: auto !important;
             flex-direction: column !important;
+            display: flex !important;
+            opacity: 1 !important;
+            transform: none !important;
         }
         body.view-mobile .page-spread.hidden {
-            display: none !important;
+            display: flex !important;
+        }
+        body.view-mobile #page-spread-1 {
+            border-bottom: 2px dashed rgba(244, 114, 182, 0.45) !important;
+            margin-bottom: 1.75rem !important;
+            padding-bottom: 1.75rem !important;
         }
         body.view-mobile .page-spread > div:first-child {
             width: 100% !important;
@@ -1030,7 +1054,7 @@
         }
         body.view-mobile .bookmark-ribbon {
             left: auto !important;
-            right: 28px !important;
+            right: 24px !important;
             transform: translateX(0) !important;
             animation: ribbonSwayMobile 4s ease-in-out infinite !important;
         }
@@ -1039,11 +1063,13 @@
             background: #fffdfb !important;
             box-shadow: none !important;
         }
-        body.view-mobile .book-nav-bar {
-            border-radius: 0 0 1.5rem 1.5rem !important;
+        body.view-mobile .book-nav-bar,
+        body.view-mobile .corner-peel-btn,
+        body.view-mobile .corner-peel-left-btn {
+            display: none !important;
         }
 
-        /* Khi xem chế độ Điện thoại trên màn hình Máy tính (Hiển thị Khung Mô phỏng Smartphone thanh lịch) */
+        /* Khi mở chế độ Điện thoại trên màn hình máy tính (Khung điện thoại thanh lịch) */
         @media (min-width: 768px) {
             body.view-mobile .stage-viewport {
                 border-radius: 2.5rem;
@@ -1054,15 +1080,68 @@
             }
         }
 
+        /* ----------------------------------------------------------
+           C. MÀN HÌNH NHỎ (< 768px) KHI CHƯA CHỌN VIEW-DESKTOP
+           ---------------------------------------------------------- */
         @media (max-width: 767px) {
+            body:not(.view-desktop) .stage-viewport {
+                max-width: 440px !important;
+                margin-top: 2.2rem;
+                margin-bottom: 2rem;
+                transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            body:not(.view-desktop) .book-inner-page {
+                min-height: auto !important;
+                overflow: visible !important;
+                border-radius: 1.5rem !important;
+                padding-bottom: 2rem !important;
+            }
+            body:not(.view-desktop) .page-spread {
+                position: relative !important;
+                inset: auto !important;
+                min-height: auto !important;
+                flex-direction: column !important;
+                display: flex !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            body:not(.view-desktop) .page-spread.hidden {
+                display: flex !important;
+            }
+            body:not(.view-desktop) #page-spread-1 {
+                border-bottom: 2px dashed rgba(244, 114, 182, 0.45) !important;
+                margin-bottom: 1.75rem !important;
+                padding-bottom: 1.75rem !important;
+            }
+            body:not(.view-desktop) .page-spread > div:first-child {
+                width: 100% !important;
+                border-bottom-width: 1px !important;
+                border-right-width: 0 !important;
+            }
+            body:not(.view-desktop) .page-spread > div:last-child {
+                width: 100% !important;
+            }
+            body:not(.view-desktop) .spine-divider {
+                display: none !important;
+            }
             body:not(.view-desktop) .bookmark-ribbon {
                 left: auto !important;
-                right: 28px !important;
+                right: 24px !important;
                 transform: translateX(0) !important;
                 animation: ribbonSwayMobile 4s ease-in-out infinite !important;
             }
+            body:not(.view-desktop) .soft-page-left,
+            body:not(.view-desktop) .soft-page-right {
+                background: #fffdfb !important;
+                box-shadow: none !important;
+            }
+            body:not(.view-desktop) .book-nav-bar,
+            body:not(.view-desktop) .corner-peel-btn,
+            body:not(.view-desktop) .corner-peel-left-btn {
+                display: none !important;
+            }
         }
-</style>
+    </style>
 </head>
 <body class="bg-pink-50 min-h-[100dvh] min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 overflow-x-hidden overflow-y-auto font-quicksand relative selection:bg-pink-300 selection:text-white">
 
@@ -1195,14 +1274,14 @@
                 <div class="orbit-star-1 text-amber-400 text-sm">✦</div>
                 <div class="orbit-star-2 text-rose-400 text-xs">✨</div>
 
-                <div id="wax-trigger-btn" class="seal-btn relative z-20 flex flex-col items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-amber-400 via-rose-500 to-pink-600 text-white border-[4px] border-white/90 shadow-[0_0_35px_rgba(244,114,182,0.85)]">
+                <div id="wax-trigger-btn" onclick="triggerMagicMorph()" class="seal-btn relative z-20 flex flex-col items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-amber-400 via-rose-500 to-pink-600 text-white border-[4px] border-white/90 shadow-[0_0_35px_rgba(244,114,182,0.85)] cursor-pointer active:scale-95 transition-transform">
                     <span class="text-2xl mb-0.5 animate-bounce" style="animation-duration: 2s;">💌</span>
                     <span class="font-vibes text-3xl leading-none text-amber-100">Chạm Vào</span>
                     <span class="font-bold text-[9px] uppercase tracking-widest mt-1 text-pink-100">Mở Món Quà</span>
                 </div>
             </div>
 
-            <div id="auto-countdown" class="relative z-10 mt-5 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-rose-500/10 via-pink-500/15 to-rose-500/10 border border-rose-300/50 text-rose-700 text-xs font-semibold backdrop-blur-md shadow-xs animate-pulse">
+            <div id="auto-countdown" onclick="triggerMagicMorph()" class="relative z-10 mt-5 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-rose-500/10 via-pink-500/15 to-rose-500/10 border border-rose-300/50 text-rose-700 text-xs font-semibold backdrop-blur-md shadow-xs animate-pulse cursor-pointer">
                 <span>⏳ Chạm để mở ngay hoặc tự động sau</span>
                 <span id="timer-sec" class="font-bold text-rose-600 text-sm">6</span>s...
             </div>
@@ -1579,14 +1658,29 @@
     <!-- SCRIPT ĐIỀU KHIỂN CHUYỂN CẢNH MA THUẬT & HOẠT HỌA -->
     <script>
         /* ==========================================================
-           CHUYỂN ĐỔI 2 CHẾ ĐỘ: ĐIỆN THOẠI & MÁY TÍNH LAPTOP
+           BIẾN TRẠNG THÁI TOÀN CỤC (KHỞI TẠO ĐẦU TIÊN TRÁNH LỖI TDZ)
            ========================================================== */
+        let currentPage = 1;
+        let isPageFlipping = false;
+        let isMorphed = false;
         let currentDeviceMode = 'desktop';
 
         function setDeviceMode(mode) {
             currentDeviceMode = mode;
             document.body.classList.remove('view-mobile', 'view-desktop');
             document.body.classList.add(mode === 'mobile' ? 'view-mobile' : 'view-desktop');
+
+            // Khi quay lại chế độ laptop, đảm bảo trang hiện tại hiển thị đúng
+            if (mode === 'desktop') {
+                const p1 = document.getElementById('page-spread-1');
+                const p2 = document.getElementById('page-spread-2');
+                if (p1 && p2) {
+                    p1.classList.toggle('hidden', currentPage !== 1);
+                    p1.classList.toggle('spread-visible', currentPage === 1);
+                    p2.classList.toggle('hidden', currentPage !== 2);
+                    p2.classList.toggle('spread-visible', currentPage === 2);
+                }
+            }
 
             const btnMobile = document.getElementById('btn-mode-mobile');
             const btnDesktop = document.getElementById('btn-mode-desktop');
@@ -1628,8 +1722,6 @@
         /* ==========================================================
            0. ĐIỀU HƯỚNG LẬT TRANG SÁCH 3D CHI TIẾT (TRANG 1 <-> 2) & ĐỔI ẢNH
            ========================================================== */
-        let currentPage = 1;
-        let isPageFlipping = false;
 
         function renderLeafFaceContent(fromPage, toPage) {
             const frontBody = document.getElementById('leaf-front-body');
@@ -1923,7 +2015,6 @@
             { id: "row-thanks", text: "Cảm ơn Thầy Cô đã luôn ân cần, tận tâm soi sáng con đường tri thức và chắp cánh ước mơ cho chúng em." }
         ];
 
-        let isMorphed = false;
         let typingTimeouts = [];
 
         /* ==========================================================
