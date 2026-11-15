@@ -57,37 +57,37 @@
         }
 
         /* -------------------------------------------------------------
-           HIỆU ỨNG ĐẶC BIỆT CHO LÁ THƯ
+           HIỆU ỨNG ĐẶC BIỆT CHO LÁ THƯ (LÁ THƯ TRẮNG TINH KHÔI & VIỀN PHÁT SÁNG)
            ------------------------------------------------------------- */
         .envelope-glow-border {
             position: relative;
-            background: rgba(255, 255, 255, 0.88);
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            border: 2px solid #fda4af;
             border-radius: 2rem;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            box-shadow: 0 25px 65px -15px rgba(225, 29, 72, 0.45), 
-                        0 0 30px rgba(244, 114, 182, 0.25) inset;
+            box-shadow: 
+                0 0 0 2px rgba(255, 255, 255, 0.95),
+                0 0 25px rgba(244, 63, 94, 0.6),
+                0 0 55px rgba(251, 113, 133, 0.35),
+                0 25px 65px -15px rgba(225, 29, 72, 0.3);
+            animation: envelopeFloat 4.5s ease-in-out infinite, envelopeGlowPulse 4s ease-in-out infinite;
         }
 
-        .envelope-glow-border::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 2.1rem;
-            padding: 2px;
-            background: linear-gradient(135deg, #f43f5e, #fb7185, #fbcfe8, #fbbf24, #f43f5e);
-            background-size: 300% 300%;
-            animation: borderGradient 6s ease infinite;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-
-        @keyframes borderGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes envelopeGlowPulse {
+            0%, 100% {
+                box-shadow: 
+                    0 0 0 2px rgba(255, 255, 255, 0.95),
+                    0 0 25px rgba(244, 63, 94, 0.6),
+                    0 0 55px rgba(251, 113, 133, 0.35),
+                    0 25px 65px -15px rgba(225, 29, 72, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 0 0 2px rgba(255, 255, 255, 0.95),
+                    0 0 38px rgba(244, 63, 94, 0.85),
+                    0 0 75px rgba(251, 191, 36, 0.5),
+                    0 25px 70px -10px rgba(225, 29, 72, 0.45);
+            }
         }
 
         .envelope-floating {
@@ -105,10 +105,10 @@
             bottom: 0;
             width: 32px;
             transform: translateX(-50%);
-            background: linear-gradient(180deg, rgba(244, 63, 94, 0.18) 0%, rgba(225, 29, 72, 0.28) 50%, rgba(244, 63, 94, 0.18) 100%);
+            background: linear-gradient(180deg, rgba(244, 63, 94, 0.10) 0%, rgba(225, 29, 72, 0.16) 50%, rgba(244, 63, 94, 0.10) 100%);
             pointer-events: none;
-            border-left: 1px dashed rgba(244, 63, 94, 0.35);
-            border-right: 1px dashed rgba(244, 63, 94, 0.35);
+            border-left: 1px dashed rgba(244, 63, 94, 0.25);
+            border-right: 1px dashed rgba(244, 63, 94, 0.25);
         }
 
         @keyframes orbitParticle {
@@ -1010,24 +1010,58 @@
         }
 
         /* ----------------------------------------------------------
+           A2. ĐẶC QUYỀN CHẾ ĐỘ MÁY TÍNH LAPTOP (VIEW-DESKTOP)
+           ---------------------------------------------------------- */
+        body.view-desktop .mobile-section-divider {
+            display: none !important;
+        }
+        body.view-desktop .page-num-badge {
+            display: inline-flex !important;
+        }
+
+        /* ----------------------------------------------------------
            B. CHẾ ĐỘ ĐIỆN THOẠI (VIEW-MOBILE) - 1 TRANG LIỀN MẠCH, CUỘN VUỐT DỌC
            ---------------------------------------------------------- */
+        body.view-mobile {
+            justify-content: flex-start !important;
+            padding-top: 3.25rem !important;
+            padding-bottom: 3.5rem !important;
+            height: auto !important;
+            min-height: 100vh !important;
+            overflow-y: auto !important;
+        }
         body.view-mobile .stage-viewport {
             max-width: 440px !important;
-            margin-top: 2.2rem;
-            margin-bottom: 2rem;
+            width: 100% !important;
+            margin: 0 auto !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+            min-height: auto !important;
+            height: auto !important;
+            overflow: visible !important;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        body.view-mobile #book-chassis,
+        body.view-mobile .book-3d {
+            width: 100% !important;
+            height: auto !important;
+            min-height: auto !important;
+            transform: none !important;
         }
         body.view-mobile .book-inner-page {
             min-height: auto !important;
+            height: auto !important;
             overflow: visible !important;
             border-radius: 1.5rem !important;
-            padding-bottom: 2rem !important;
+            padding: 0.5rem 0.5rem 2rem 0.5rem !important;
+            display: block !important;
         }
         body.view-mobile .page-spread {
             position: relative !important;
             inset: auto !important;
             min-height: auto !important;
+            height: auto !important;
+            width: 100% !important;
             flex-direction: column !important;
             display: flex !important;
             opacity: 1 !important;
@@ -1037,9 +1071,13 @@
             display: flex !important;
         }
         body.view-mobile #page-spread-1 {
-            border-bottom: 2px dashed rgba(244, 114, 182, 0.45) !important;
-            margin-bottom: 1.75rem !important;
-            padding-bottom: 1.75rem !important;
+            border-bottom: none !important;
+            margin-bottom: 0.25rem !important;
+            padding-bottom: 0.25rem !important;
+        }
+        body.view-mobile #page-spread-2 {
+            margin-top: 0.25rem !important;
+            padding-top: 0.25rem !important;
         }
         body.view-mobile .page-spread > div:first-child {
             width: 100% !important;
@@ -1054,7 +1092,7 @@
         }
         body.view-mobile .bookmark-ribbon {
             left: auto !important;
-            right: 24px !important;
+            right: 22px !important;
             transform: translateX(0) !important;
             animation: ribbonSwayMobile 4s ease-in-out infinite !important;
         }
@@ -1065,8 +1103,15 @@
         }
         body.view-mobile .book-nav-bar,
         body.view-mobile .corner-peel-btn,
-        body.view-mobile .corner-peel-left-btn {
+        body.view-mobile .corner-peel-left-btn,
+        body.view-mobile #book-shimmer-sweep {
             display: none !important;
+        }
+        body.view-mobile .page-num-badge {
+            display: none !important;
+        }
+        body.view-mobile .mobile-section-divider {
+            display: flex !important;
         }
 
         /* Khi mở chế độ Điện thoại trên màn hình máy tính (Khung điện thoại thanh lịch) */
@@ -1084,22 +1129,46 @@
            C. MÀN HÌNH NHỎ (< 768px) KHI CHƯA CHỌN VIEW-DESKTOP
            ---------------------------------------------------------- */
         @media (max-width: 767px) {
+            body:not(.view-desktop) {
+                justify-content: flex-start !important;
+                padding-top: 3.25rem !important;
+                padding-bottom: 3.5rem !important;
+                height: auto !important;
+                min-height: 100vh !important;
+                overflow-y: auto !important;
+            }
             body:not(.view-desktop) .stage-viewport {
                 max-width: 440px !important;
-                margin-top: 2.2rem;
-                margin-bottom: 2rem;
+                width: 100% !important;
+                margin: 0 auto !important;
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+                min-height: auto !important;
+                height: auto !important;
+                overflow: visible !important;
                 transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            body:not(.view-desktop) #book-chassis,
+            body:not(.view-desktop) .book-3d {
+                width: 100% !important;
+                height: auto !important;
+                min-height: auto !important;
+                transform: none !important;
             }
             body:not(.view-desktop) .book-inner-page {
                 min-height: auto !important;
+                height: auto !important;
                 overflow: visible !important;
                 border-radius: 1.5rem !important;
-                padding-bottom: 2rem !important;
+                padding: 0.5rem 0.5rem 2rem 0.5rem !important;
+                display: block !important;
             }
             body:not(.view-desktop) .page-spread {
                 position: relative !important;
                 inset: auto !important;
                 min-height: auto !important;
+                height: auto !important;
+                width: 100% !important;
                 flex-direction: column !important;
                 display: flex !important;
                 opacity: 1 !important;
@@ -1109,9 +1178,13 @@
                 display: flex !important;
             }
             body:not(.view-desktop) #page-spread-1 {
-                border-bottom: 2px dashed rgba(244, 114, 182, 0.45) !important;
-                margin-bottom: 1.75rem !important;
-                padding-bottom: 1.75rem !important;
+                border-bottom: none !important;
+                margin-bottom: 0.25rem !important;
+                padding-bottom: 0.25rem !important;
+            }
+            body:not(.view-desktop) #page-spread-2 {
+                margin-top: 0.25rem !important;
+                padding-top: 0.25rem !important;
             }
             body:not(.view-desktop) .page-spread > div:first-child {
                 width: 100% !important;
@@ -1126,7 +1199,7 @@
             }
             body:not(.view-desktop) .bookmark-ribbon {
                 left: auto !important;
-                right: 24px !important;
+                right: 22px !important;
                 transform: translateX(0) !important;
                 animation: ribbonSwayMobile 4s ease-in-out infinite !important;
             }
@@ -1137,8 +1210,15 @@
             }
             body:not(.view-desktop) .book-nav-bar,
             body:not(.view-desktop) .corner-peel-btn,
-            body:not(.view-desktop) .corner-peel-left-btn {
+            body:not(.view-desktop) .corner-peel-left-btn,
+            body:not(.view-desktop) #book-shimmer-sweep {
                 display: none !important;
+            }
+            body:not(.view-desktop) .page-num-badge {
+                display: none !important;
+            }
+            body:not(.view-desktop) .mobile-section-divider {
+                display: flex !important;
             }
         }
     </style>
@@ -1149,11 +1229,11 @@
          THANH CHUYỂN ĐỔI 2 CHẾ ĐỘ: ĐIỆN THOẠI (MOBILE) & MÁY TÍNH LAPTOP (DESKTOP)
          ========================================================================= -->
     <div id="device-mode-bar" class="fixed top-2.5 left-2.5 sm:top-3 sm:left-3 z-50 flex items-center bg-white/80 hover:bg-white/95 backdrop-blur-md p-0.5 rounded-full border border-pink-200/80 shadow-xs hover:shadow-md transition-all">
-        <button id="btn-mode-mobile" onclick="setDeviceMode('mobile')" class="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all text-gray-500 hover:text-rose-600" title="Chuyển sang Chế độ Điện thoại">
+        <button id="btn-mode-mobile" onclick="localStorage.setItem('manual_mode_lock', '1'); setDeviceMode('mobile')" class="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all text-gray-500 hover:text-rose-600" title="Chuyển sang Chế độ Điện thoại (1 trang duy nhất cuộn dọc)">
             <i data-lucide="smartphone" class="w-3 h-3"></i>
             <span>Điện thoại</span>
         </button>
-        <button id="btn-mode-desktop" onclick="setDeviceMode('desktop')" class="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs" title="Chuyển sang Chế độ Máy tính / Laptop">
+        <button id="btn-mode-desktop" onclick="localStorage.setItem('manual_mode_lock', '1'); setDeviceMode('desktop')" class="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold transition-all bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs" title="Chuyển sang Chế độ Máy tính / Laptop (Sách 3D lật 2 trang)">
             <i data-lucide="laptop" class="w-3 h-3"></i>
             <span>Máy tính</span>
         </button>
@@ -1163,9 +1243,9 @@
     <div id="flash-overlay" class="fixed inset-0 bg-white z-[80] opacity-0 pointer-events-none transition-opacity duration-700"></div>
 
     <!-- Glowing Background Blobs Tone Hồng Gốc -->
-    <div class="fixed top-0 -left-4 w-72 md:w-96 h-72 md:h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob pointer-events-none"></div>
-    <div class="fixed top-0 -right-4 w-72 md:w-96 h-72 md:h-96 bg-rose-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob animation-delay-2000 pointer-events-none"></div>
-    <div class="fixed -bottom-8 left-1/2 -translate-x-1/2 w-72 md:w-96 h-72 md:h-96 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob animation-delay-4000 pointer-events-none"></div>
+    <div class="fixed top-0 -left-4 w-72 md:w-96 h-72 md:h-96 bg-pink-300 rounded-full filter blur-[80px] -z-10 opacity-70 animate-blob pointer-events-none"></div>
+    <div class="fixed top-0 -right-4 w-72 md:w-96 h-72 md:h-96 bg-rose-300 rounded-full filter blur-[80px] -z-10 opacity-70 animate-blob animation-delay-2000 pointer-events-none"></div>
+    <div class="fixed -bottom-8 left-1/2 -translate-x-1/2 w-72 md:w-96 h-72 md:h-96 bg-fuchsia-300 rounded-full filter blur-[80px] -z-10 opacity-70 animate-blob animation-delay-4000 pointer-events-none"></div>
 
     <!-- Canvas Cánh Hoa Đào & Bụi Tiên Bay Toàn Cảnh -->
     <canvas id="sakuraCanvas" class="fixed inset-0 w-full h-full z-0 pointer-events-none"></canvas>
@@ -1242,7 +1322,7 @@
             <div class="ribbon-cross-v"></div>
 
             <div class="corner-ribbon">
-                <span>✦ VIP 2026 ✦</span>
+                <span>✦ Niên Khóa 2024 - 2027 ✦</span>
             </div>
 
             <!-- 4 Góc hoa văn phong bì -->
@@ -1264,6 +1344,13 @@
             </h1>
 
             <p class="relative z-10 font-vibes text-3xl sm:text-4xl text-rose-800 mb-1 drop-shadow-xs">Tri Ân Thầy Cô</p>
+            <div class="relative z-10 mb-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-600 font-quicksand font-bold text-xs sm:text-sm shadow-xs">
+                    <span>🌸</span>
+                    <span>Tập thể Lớp 12A1 • Niên khóa 2024 - 2027</span>
+                    <span>🌸</span>
+                </span>
+            </div>
             <p class="relative z-10 text-xs sm:text-sm text-gray-500 mb-6 font-medium">Chạm nhẹ để mở điều bất ngờ đang ẩn giấu...</p>
 
             <!-- Con dấu sáp và hào quang -->
@@ -1413,7 +1500,7 @@
                                     <span class="text-sm">🪷</span>
                                     <span>Kỷ Niệm Mái Trường</span>
                                 </div>
-                                <span class="text-[10px] uppercase font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/70">Tập 01</span>
+                                <span class="page-num-badge text-[10px] uppercase font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/70">Tập 01</span>
                             </div>
 
                             <!-- Khung ảnh Polaroid với nơ ghim sang trọng (Khôi phục bản gốc) -->
@@ -1457,7 +1544,7 @@
                         <!-- Footer trang trái -->
                         <div class="pt-2.5 mt-2 border-t border-pink-200/60 flex justify-between items-center text-[11px] text-gray-500">
                             <span class="flex items-center gap-1"><span class="text-rose-500">📍</span> An Giang, 20-11</span>
-                            <span class="flex items-center gap-1 text-rose-600 font-semibold"><i data-lucide="sparkle" class="w-3.5 h-3.5 text-amber-500"></i> Trang 01 • Tri Ân</span>
+                            <span class="page-num-badge flex items-center gap-1 text-rose-600 font-semibold"><i data-lucide="sparkle" class="w-3.5 h-3.5 text-amber-500"></i> Trang 01 • Tri Ân</span>
                         </div>
                     </div>
 
@@ -1467,7 +1554,7 @@
                             <!-- Header Trang Phải -->
                             <div class="mb-5 pb-3 border-b border-pink-200/70 flex items-center justify-between">
                                 <div>
-                                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-pink-600 block">Thư Viết Từ Trái Tim</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-pink-600 block">Thư Viết Từ Trái Tim • Niên Khóa 2024 - 2027</span>
                                     <h2 class="font-dancing text-2xl sm:text-3xl font-bold text-rose-800">Lời Chúc Tri Ân Thầy Cô</h2>
                                 </div>
                                 <span class="text-xl">💐</span>
@@ -1483,11 +1570,14 @@
                         </div>
 
                         <!-- Chữ Ký Kính Thư -->
-                        <div id="signature-block" class="mt-6 pt-3 border-t border-pink-200/70 flex items-center justify-end pr-16 sm:pr-20 pb-1 opacity-0 transition-opacity duration-1000">
+                        <div id="signature-block" class="mt-6 pt-3 border-t border-pink-200/70 flex items-center justify-end pr-16 sm:pr-20 pb-1 opacity-100 transition-opacity duration-500">
                             <div class="text-right">
                                 <p class="text-gray-500 text-xs font-medium tracking-wide mb-0.5">Kính thư,</p>
                                 <p class="font-vibes text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-600 drop-shadow-sm">
                                     Tập thể lớp <span class="font-quicksand font-bold text-xl sm:text-2xl text-rose-500 tracking-wider">12A1</span>
+                                </p>
+                                <p class="text-[11px] sm:text-xs text-rose-500 font-bold font-quicksand tracking-wider mt-0.5">
+                                    Niên khóa 2024 - 2027
                                 </p>
                             </div>
                         </div>
@@ -1501,6 +1591,17 @@
 
                     </div>
 
+                </div>
+
+                <!-- DẢI NỐI TRANG TRÍ DÀNH RIÊNG CHO ĐIỆN THOẠI (1 TRANG LIỀN MẠCH CUỘN DỌC) -->
+                <div class="mobile-section-divider hidden items-center justify-center gap-3 my-4 px-4 py-1 text-rose-400">
+                    <div class="h-px bg-gradient-to-r from-transparent via-rose-300/60 to-transparent flex-1"></div>
+                    <span class="text-[11px] font-semibold tracking-wider text-rose-600 bg-rose-50/90 px-3 py-1 rounded-full border border-rose-200/60 shadow-xs flex items-center gap-1.5">
+                        <span class="text-amber-500 animate-pulse">✨</span>
+                        <span>Khoảnh Khắc Kỷ Niệm & Tri Ân</span>
+                        <span class="text-amber-500 animate-pulse">✨</span>
+                    </span>
+                    <div class="h-px bg-gradient-to-r from-transparent via-rose-300/60 to-transparent flex-1"></div>
                 </div>
 
                 <!-- =============================================================
@@ -1517,7 +1618,7 @@
                                     <span class="text-sm">📸</span>
                                     <span>Kỷ Niệm Thầy Cô & Tập Thể</span>
                                 </div>
-                                <span class="text-[10px] uppercase font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200/70">Trang 02</span>
+                                <span class="page-num-badge text-[10px] uppercase font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200/70">Trang 02</span>
                             </div>
 
                             <!-- ẢNH 1 (TRÊN): HỌP MẶT 37 NĂM NGÀY NHÀ GIÁO VIỆT NAM 20/11 -->
@@ -1564,7 +1665,7 @@
                         <!-- Footer trang trái kèm Nếp gấp quay lại Trang 1 -->
                         <div class="pt-2 mt-2 border-t border-pink-200/50 flex justify-between items-center text-[11px] text-gray-500 relative">
                             <span class="flex items-center gap-1"><span class="text-rose-500">📍</span> Khoảnh Khắc Đẹp</span>
-                            <span class="flex items-center gap-1 text-rose-600 font-semibold pr-14 sm:pr-16">Trang 02 • Hội Ngộ</span>
+                            <span class="page-num-badge flex items-center gap-1 text-rose-600 font-semibold pr-14 sm:pr-16">Trang 02 • Hội Ngộ</span>
                             
                             <!-- Nếp gấp góc trang quay lại Trang 1 -->
                             <div class="corner-peel-left-btn !-bottom-2 !-left-2" onclick="goToPage(1)" title="Chạm để quay lại Trang 1">
@@ -1594,7 +1695,7 @@
                                     Thời gian dẫu có trôi đi, những lời dạy bảo ân cần và nụ cười ấm áp của Thầy Cô sẽ mãi là hành trang quý giá nhất trong cuộc đời chúng em.
                                 </p>
                                 <p class="text-right text-[11px] text-amber-800/80 font-bold mt-1 pr-1 font-quicksand">
-                                    — Tập thể lớp 12A1 thân thương —
+                                    — Tập thể lớp 12A1 thân thương • Niên khóa 2024 - 2027 —
                                 </p>
                             </div>
 
@@ -1620,9 +1721,10 @@
                         </div>
 
                         <!-- Footer trang phải (Trang cuối) -->
-                        <div class="pt-2 mt-2 border-t border-pink-200/50 flex justify-between items-center text-[11px] text-gray-500 relative">
-                            <span class="text-rose-600 font-semibold">Tập Thể Lớp 12A1</span>
-                            <span class="text-gray-400 font-medium">Niên Khóa 2023 - 2026 • Tri Ân Thầy Cô 20/11</span>
+                        <div class="pt-2 mt-2 border-t border-pink-200/50 flex flex-wrap justify-between items-center text-[11px] text-gray-500 relative gap-1">
+                            <span class="text-rose-600 font-bold">Tập Thể Lớp 12A1</span>
+                            <span class="text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-full border border-pink-200">Niên Khóa 2024 - 2027</span>
+                            <span class="text-gray-400 font-medium">Tri Ân Thầy Cô 20/11</span>
                         </div>
                     </div>
 
@@ -1670,15 +1772,45 @@
             document.body.classList.remove('view-mobile', 'view-desktop');
             document.body.classList.add(mode === 'mobile' ? 'view-mobile' : 'view-desktop');
 
-            // Khi quay lại chế độ laptop, đảm bảo trang hiện tại hiển thị đúng
-            if (mode === 'desktop') {
-                const p1 = document.getElementById('page-spread-1');
-                const p2 = document.getElementById('page-spread-2');
+            const p1 = document.getElementById('page-spread-1');
+            const p2 = document.getElementById('page-spread-2');
+
+            if (mode === 'mobile') {
+                // CHẾ ĐỘ ĐIỆN THOẠI: 1 TRANG DUY NHẤT LIỀN MẠCH CUỘN DỌC
+                // Luôn hiển thị cả 2 nửa trang thành một dòng cuộn duy nhất, xóa sạch class hidden & style tuyệt đối
+                if (p1 && p2) {
+                    p1.classList.remove('hidden');
+                    p1.classList.add('spread-visible');
+                    p2.classList.remove('hidden');
+                    p2.classList.add('spread-visible');
+                    p1.style.position = '';
+                    p1.style.top = '';
+                    p1.style.left = '';
+                    p1.style.width = '';
+                    p1.style.zIndex = '';
+                    p2.style.position = '';
+                    p2.style.top = '';
+                    p2.style.left = '';
+                    p2.style.width = '';
+                    p2.style.zIndex = '';
+                }
+            } else {
+                // CHẾ ĐỘ MÁY TÍNH / LAPTOP: GIỮ NGUYÊN 2 TRANG LẬT SÁCH 3D
                 if (p1 && p2) {
                     p1.classList.toggle('hidden', currentPage !== 1);
                     p1.classList.toggle('spread-visible', currentPage === 1);
                     p2.classList.toggle('hidden', currentPage !== 2);
                     p2.classList.toggle('spread-visible', currentPage === 2);
+                    p1.style.position = '';
+                    p1.style.top = '';
+                    p1.style.left = '';
+                    p1.style.width = '';
+                    p1.style.zIndex = '';
+                    p2.style.position = '';
+                    p2.style.top = '';
+                    p2.style.left = '';
+                    p2.style.width = '';
+                    p2.style.zIndex = '';
                 }
             }
 
@@ -1703,6 +1835,11 @@
         }
 
         function initDeviceMode() {
+            // Nếu là thiết bị điện thoại thật (< 768px), luôn mặc định 100% Chế độ Điện thoại 1 trang liền mạch
+            if (window.innerWidth < 768) {
+                setDeviceMode('mobile');
+                return;
+            }
             try {
                 const saved = localStorage.getItem('saved_device_mode');
                 if (saved === 'mobile' || saved === 'desktop') {
@@ -1710,9 +1847,19 @@
                     return;
                 }
             } catch(e){}
-            const isMobileDevice = window.innerWidth < 768;
-            setDeviceMode(isMobileDevice ? 'mobile' : 'desktop');
+            setDeviceMode('desktop');
         }
+
+        // Tự động nhận diện khi xoay màn hình hoặc thay đổi kích thước cửa sổ
+        window.addEventListener('resize', () => {
+            const isNarrow = window.innerWidth < 768;
+            const isCurrentMobile = document.body.classList.contains('view-mobile');
+            if (isNarrow && !isCurrentMobile && !localStorage.getItem('manual_mode_lock')) {
+                setDeviceMode('mobile');
+            } else if (!isNarrow && isCurrentMobile && !localStorage.getItem('manual_mode_lock')) {
+                setDeviceMode('desktop');
+            }
+        });
 
         // Kích hoạt nhận diện ngay lập tức
         initDeviceMode();
@@ -1833,6 +1980,12 @@
         }
 
         function goToPage(targetPage) {
+            // Trên điện thoại là 1 trang duy nhất cuộn dọc, tuyệt đối KHÔNG chuyển trang hay ẩn trang
+            const isMobile = document.body.classList.contains('view-mobile') || (window.innerWidth < 768 && !document.body.classList.contains('view-desktop'));
+            if (isMobile) {
+                return;
+            }
+
             if (targetPage < 1 || targetPage > 2 || targetPage === currentPage || isPageFlipping) return;
             isPageFlipping = true;
 
@@ -1843,18 +1996,6 @@
 
             playPaperTurnSound();
             spawnPageTurnParticles(isForward);
-
-            const isMobile = document.body.classList.contains('view-mobile') || (window.innerWidth < 768 && !document.body.classList.contains('view-desktop'));
-            if (isMobile) {
-                // Pin outgoing page smoothly so incoming page takes space naturally without jumping
-                currentEl.style.position = 'absolute';
-                currentEl.style.top = '0';
-                currentEl.style.left = '0';
-                currentEl.style.width = '100%';
-                currentEl.style.zIndex = '10';
-                targetEl.style.position = 'relative';
-                targetEl.style.zIndex = '20';
-            }
 
             const shimmer = document.getElementById('book-shimmer-sweep');
             if (shimmer) {
@@ -2029,8 +2170,7 @@
                 if (el) el.innerHTML = '';
             });
             const sigZone = document.getElementById('signature-block');
-            sigZone.classList.remove('opacity-100');
-            sigZone.classList.add('opacity-0');
+            sigZone.classList.add('opacity-100');
 
             let currentLineIndex = 0;
 
@@ -2555,6 +2695,10 @@
         }, { passive: true });
 
         document.addEventListener('touchend', (e) => {
+            // Trên điện thoại là 1 trang duy nhất cuộn dọc, không bắt cử chỉ swipe ngang lật trang
+            const isMobile = document.body.classList.contains('view-mobile') || (window.innerWidth < 768 && !document.body.classList.contains('view-desktop'));
+            if (isMobile) return;
+
             if (!isMorphed || isPageFlipping) return;
             const touchEndX = e.changedTouches[0].clientX;
             const touchEndY = e.changedTouches[0].clientY;

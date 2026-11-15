@@ -57,37 +57,37 @@
         }
 
         /* -------------------------------------------------------------
-           HIỆU ỨNG ĐẶC BIỆT CHO LÁ THƯ
+           HIỆU ỨNG ĐẶC BIỆT CHO LÁ THƯ (LÁ THƯ TRẮNG TINH KHÔI & VIỀN PHÁT SÁNG)
            ------------------------------------------------------------- */
         .envelope-glow-border {
             position: relative;
-            background: rgba(255, 255, 255, 0.88);
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            border: 2px solid #fda4af;
             border-radius: 2rem;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            box-shadow: 0 25px 65px -15px rgba(225, 29, 72, 0.45), 
-                        0 0 30px rgba(244, 114, 182, 0.25) inset;
+            box-shadow: 
+                0 0 0 2px rgba(255, 255, 255, 0.95),
+                0 0 25px rgba(244, 63, 94, 0.6),
+                0 0 55px rgba(251, 113, 133, 0.35),
+                0 25px 65px -15px rgba(225, 29, 72, 0.3);
+            animation: envelopeFloat 4.5s ease-in-out infinite, envelopeGlowPulse 4s ease-in-out infinite;
         }
 
-        .envelope-glow-border::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 2.1rem;
-            padding: 2px;
-            background: linear-gradient(135deg, #f43f5e, #fb7185, #fbcfe8, #fbbf24, #f43f5e);
-            background-size: 300% 300%;
-            animation: borderGradient 6s ease infinite;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-
-        @keyframes borderGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes envelopeGlowPulse {
+            0%, 100% {
+                box-shadow: 
+                    0 0 0 2px rgba(255, 255, 255, 0.95),
+                    0 0 25px rgba(244, 63, 94, 0.6),
+                    0 0 55px rgba(251, 113, 133, 0.35),
+                    0 25px 65px -15px rgba(225, 29, 72, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 0 0 2px rgba(255, 255, 255, 0.95),
+                    0 0 38px rgba(244, 63, 94, 0.85),
+                    0 0 75px rgba(251, 191, 36, 0.5),
+                    0 25px 70px -10px rgba(225, 29, 72, 0.45);
+            }
         }
 
         .envelope-floating {
@@ -105,10 +105,10 @@
             bottom: 0;
             width: 32px;
             transform: translateX(-50%);
-            background: linear-gradient(180deg, rgba(244, 63, 94, 0.18) 0%, rgba(225, 29, 72, 0.28) 50%, rgba(244, 63, 94, 0.18) 100%);
+            background: linear-gradient(180deg, rgba(244, 63, 94, 0.10) 0%, rgba(225, 29, 72, 0.16) 50%, rgba(244, 63, 94, 0.10) 100%);
             pointer-events: none;
-            border-left: 1px dashed rgba(244, 63, 94, 0.35);
-            border-right: 1px dashed rgba(244, 63, 94, 0.35);
+            border-left: 1px dashed rgba(244, 63, 94, 0.25);
+            border-right: 1px dashed rgba(244, 63, 94, 0.25);
         }
 
         @keyframes orbitParticle {
@@ -1243,9 +1243,9 @@
     <div id="flash-overlay" class="fixed inset-0 bg-white z-[80] opacity-0 pointer-events-none transition-opacity duration-700"></div>
 
     <!-- Glowing Background Blobs Tone Hồng Gốc -->
-    <div class="fixed top-0 -left-4 w-72 md:w-96 h-72 md:h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob pointer-events-none"></div>
-    <div class="fixed top-0 -right-4 w-72 md:w-96 h-72 md:h-96 bg-rose-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob animation-delay-2000 pointer-events-none"></div>
-    <div class="fixed -bottom-8 left-1/2 -translate-x-1/2 w-72 md:w-96 h-72 md:h-96 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob animation-delay-4000 pointer-events-none"></div>
+    <div class="fixed top-0 -left-4 w-72 md:w-96 h-72 md:h-96 bg-pink-300 rounded-full filter blur-[80px] -z-10 opacity-70 animate-blob pointer-events-none"></div>
+    <div class="fixed top-0 -right-4 w-72 md:w-96 h-72 md:h-96 bg-rose-300 rounded-full filter blur-[80px] -z-10 opacity-70 animate-blob animation-delay-2000 pointer-events-none"></div>
+    <div class="fixed -bottom-8 left-1/2 -translate-x-1/2 w-72 md:w-96 h-72 md:h-96 bg-fuchsia-300 rounded-full filter blur-[80px] -z-10 opacity-70 animate-blob animation-delay-4000 pointer-events-none"></div>
 
     <!-- Canvas Cánh Hoa Đào & Bụi Tiên Bay Toàn Cảnh -->
     <canvas id="sakuraCanvas" class="fixed inset-0 w-full h-full z-0 pointer-events-none"></canvas>
@@ -1322,7 +1322,7 @@
             <div class="ribbon-cross-v"></div>
 
             <div class="corner-ribbon">
-                <span>✦ VIP 2026 ✦</span>
+                <span>✦ Niên Khóa 2024 - 2027 ✦</span>
             </div>
 
             <!-- 4 Góc hoa văn phong bì -->
@@ -1344,6 +1344,13 @@
             </h1>
 
             <p class="relative z-10 font-vibes text-3xl sm:text-4xl text-rose-800 mb-1 drop-shadow-xs">Tri Ân Thầy Cô</p>
+            <div class="relative z-10 mb-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-600 font-quicksand font-bold text-xs sm:text-sm shadow-xs">
+                    <span>🌸</span>
+                    <span>Tập thể Lớp 12A1 • Niên khóa 2024 - 2027</span>
+                    <span>🌸</span>
+                </span>
+            </div>
             <p class="relative z-10 text-xs sm:text-sm text-gray-500 mb-6 font-medium">Chạm nhẹ để mở điều bất ngờ đang ẩn giấu...</p>
 
             <!-- Con dấu sáp và hào quang -->
@@ -1547,7 +1554,7 @@
                             <!-- Header Trang Phải -->
                             <div class="mb-5 pb-3 border-b border-pink-200/70 flex items-center justify-between">
                                 <div>
-                                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-pink-600 block">Thư Viết Từ Trái Tim</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-pink-600 block">Thư Viết Từ Trái Tim • Niên Khóa 2024 - 2027</span>
                                     <h2 class="font-dancing text-2xl sm:text-3xl font-bold text-rose-800">Lời Chúc Tri Ân Thầy Cô</h2>
                                 </div>
                                 <span class="text-xl">💐</span>
@@ -1563,11 +1570,14 @@
                         </div>
 
                         <!-- Chữ Ký Kính Thư -->
-                        <div id="signature-block" class="mt-6 pt-3 border-t border-pink-200/70 flex items-center justify-end pr-16 sm:pr-20 pb-1 opacity-0 transition-opacity duration-1000">
+                        <div id="signature-block" class="mt-6 pt-3 border-t border-pink-200/70 flex items-center justify-end pr-16 sm:pr-20 pb-1 opacity-100 transition-opacity duration-500">
                             <div class="text-right">
                                 <p class="text-gray-500 text-xs font-medium tracking-wide mb-0.5">Kính thư,</p>
                                 <p class="font-vibes text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-600 drop-shadow-sm">
                                     Tập thể lớp <span class="font-quicksand font-bold text-xl sm:text-2xl text-rose-500 tracking-wider">12A1</span>
+                                </p>
+                                <p class="text-[11px] sm:text-xs text-rose-500 font-bold font-quicksand tracking-wider mt-0.5">
+                                    Niên khóa 2024 - 2027
                                 </p>
                             </div>
                         </div>
@@ -1685,7 +1695,7 @@
                                     Thời gian dẫu có trôi đi, những lời dạy bảo ân cần và nụ cười ấm áp của Thầy Cô sẽ mãi là hành trang quý giá nhất trong cuộc đời chúng em.
                                 </p>
                                 <p class="text-right text-[11px] text-amber-800/80 font-bold mt-1 pr-1 font-quicksand">
-                                    — Tập thể lớp 12A1 thân thương —
+                                    — Tập thể lớp 12A1 thân thương • Niên khóa 2024 - 2027 —
                                 </p>
                             </div>
 
@@ -1711,9 +1721,10 @@
                         </div>
 
                         <!-- Footer trang phải (Trang cuối) -->
-                        <div class="pt-2 mt-2 border-t border-pink-200/50 flex justify-between items-center text-[11px] text-gray-500 relative">
-                            <span class="text-rose-600 font-semibold">Tập Thể Lớp 12A1</span>
-                            <span class="text-gray-400 font-medium">Niên Khóa 2023 - 2026 • Tri Ân Thầy Cô 20/11</span>
+                        <div class="pt-2 mt-2 border-t border-pink-200/50 flex flex-wrap justify-between items-center text-[11px] text-gray-500 relative gap-1">
+                            <span class="text-rose-600 font-bold">Tập Thể Lớp 12A1</span>
+                            <span class="text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-full border border-pink-200">Niên Khóa 2024 - 2027</span>
+                            <span class="text-gray-400 font-medium">Tri Ân Thầy Cô 20/11</span>
                         </div>
                     </div>
 
@@ -2159,8 +2170,7 @@
                 if (el) el.innerHTML = '';
             });
             const sigZone = document.getElementById('signature-block');
-            sigZone.classList.remove('opacity-100');
-            sigZone.classList.add('opacity-0');
+            sigZone.classList.add('opacity-100');
 
             let currentLineIndex = 0;
 
